@@ -12,7 +12,7 @@ in vec3 wPosition;
 out vec4 fragColor;
 
 void main () {
-    if (wPosition.y < 0.0)
+    if (wPosition.y > 0.0)
     {
         discard;        
     }
