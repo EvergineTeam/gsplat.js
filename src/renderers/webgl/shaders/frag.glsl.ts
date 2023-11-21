@@ -7,12 +7,12 @@ precision highp float;
 
 in vec4 vColor;
 in vec2 vPosition;
-in float cutoff;
+in vec3 wPosition;
 
 out vec4 fragColor;
 
 void main () {
-    if (cutoff != 0.0)
+    if (wPosition.y < 0.0)
     {
         discard;        
     }
