@@ -7,10 +7,13 @@ precision highp float;
 
 in vec4 vColor;
 in vec2 vPosition;
+in bool cutoff;
 
 out vec4 fragColor;
 
 void main () {
+    if (cutoff) discard;        
+
     float A = -dot(vPosition, vPosition);
     if (A < -4.0) discard;
     float B = exp(A) * vColor.a;

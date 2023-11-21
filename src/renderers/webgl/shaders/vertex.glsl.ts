@@ -19,11 +19,14 @@ in int index;
 
 out vec4 vColor;
 out vec2 vPosition;
+out bool cutoff;
 
 void main () {
     uvec4 cen = texelFetch(u_texture, ivec2((uint(index) & 0x3ffu) << 1, uint(index) >> 10), 0);
     vec4 cam = view * vec4(uintBitsToFloat(cen.xyz), 1);
     vec4 pos2d = projection * cam;
+
+    cutoff = cen.y < 0;
 
     float clip = 1.2 * pos2d.w;
     if (pos2d.z < -pos2d.w || pos2d.x < -clip || pos2d.x > clip || pos2d.y < -clip || pos2d.y > clip) {
