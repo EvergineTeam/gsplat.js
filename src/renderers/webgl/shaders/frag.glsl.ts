@@ -12,7 +12,10 @@ in float cutoff;
 out vec4 fragColor;
 
 void main () {
-    if (cutoff) discard;        
+    if (cutoff != 0.0)
+    {
+        discard;        
+    }
 
     float A = -dot(vPosition, vPosition);
     if (A < -4.0) discard;
