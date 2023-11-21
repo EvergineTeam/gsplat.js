@@ -26,7 +26,7 @@ void main () {
     vec4 cam = view * vec4(uintBitsToFloat(cen.xyz), 1);
     vec4 pos2d = projection * cam;
 
-    cutoff = cen.y < 0;
+    cutoff = float(cen.y < 0.0);
 
     float clip = 1.2 * pos2d.w;
     if (pos2d.z < -pos2d.w || pos2d.x < -clip || pos2d.x > clip || pos2d.y < -clip || pos2d.y > clip) {
