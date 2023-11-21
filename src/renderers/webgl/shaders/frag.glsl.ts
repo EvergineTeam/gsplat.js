@@ -7,7 +7,7 @@ precision highp float;
 
 in vec4 vColor;
 in vec2 vPosition;
-in bool cutoff;
+in float cutoff;
 
 out vec4 fragColor;
 

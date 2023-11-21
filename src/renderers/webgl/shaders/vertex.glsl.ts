@@ -19,7 +19,7 @@ in int index;
 
 out vec4 vColor;
 out vec2 vPosition;
-out bool cutoff;
+out float cutoff;
 
 void main () {
     uvec4 cen = texelFetch(u_texture, ivec2((uint(index) & 0x3ffu) << 1, uint(index) >> 10), 0);
