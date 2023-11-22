@@ -118,8 +118,8 @@ void main () {
 
 
     //vec3 wcenter = uintBitsToFloat(cen.xyz);  
-    mat4 viewproj = transpose(projection) * transpose(view);
-    mat4 iviewproj = invertMat(viewproj);
+    mat4 viewproj = projection * view;
+    mat4 iviewproj = tranpose(invertMat(viewproj));
 
     wPosition = iviewproj * vsposition;
 
