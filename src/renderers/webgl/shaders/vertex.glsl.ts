@@ -26,7 +26,7 @@ void main () {
     vec4 cam = view * vec4(uintBitsToFloat(cen.xyz), 1);
     vec4 pos2d = projection * cam;
 
-    wPosition = uintBitsToFloat(cen.xyz);
+    vec3 wcenter = uintBitsToFloat(cen.xyz);    
 
     float clip = 1.2 * pos2d.w;
     if (pos2d.z < -pos2d.w || pos2d.x < -clip || pos2d.x > clip || pos2d.y < -clip || pos2d.y > clip) {
@@ -70,6 +70,8 @@ void main () {
         float end = min(normalizedDepth + 0.1, 1.0);
         scalingFactor = clamp((u_depthFade - start) / (end - start), 0.0, 1.0);
     }
+
+    wPosition = wcenter + vec2(position.x * majorAxis * scalingFactor, position.y * minorAxis * scalingFactor);
 
     vec2 vCenter = vec2(pos2d) / pos2d.w;
     gl_Position = vec4(
