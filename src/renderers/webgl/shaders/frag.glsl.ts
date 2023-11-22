@@ -22,6 +22,6 @@ void main () {
     float B = exp(A) * vColor.a;
     fragColor = vec4(B * vColor.rgb, B);*/
 
-    fragColor = vec4(wPosition.xyz, 1.0);
+    fragColor = wPosition;
 }
 `;
