@@ -12,10 +12,10 @@ in vec4 wPosition;
 out vec4 fragColor;
 
 void main () {
-    if (wPosition.y > 0.0)
+    /*if (wPosition.y > 0.0)
     {
         discard;        
-    }
+    }*/
 
     float A = -dot(vPosition, vPosition);
     if (A < -4.0) discard;
