@@ -21,7 +21,7 @@ out vec4 vColor;
 out vec2 vPosition;
 out vec3 wPosition;
 
-mat4 inverse(mat4 m) {
+mat4 invertMat(mat4 m) {
   float
       a00 = m[0][0], a01 = m[0][1], a02 = m[0][2], a03 = m[0][3],
       a10 = m[1][0], a11 = m[1][1], a12 = m[1][2], a13 = m[1][3],
@@ -117,10 +117,9 @@ void main () {
                     + position.y * minorAxis * scalingFactor / viewport, 0.0, 1.0);
 
 
-
     //vec3 wcenter = uintBitsToFloat(cen.xyz);  
     mat4 viewproj = view * projection;
-    mat4 iviewproj = inverse(viewproj);
+    mat4 iviewproj = invertMat(viewproj);
 
     wPosition = (vsposition * iviewproj).xyz;
 
