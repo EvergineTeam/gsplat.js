@@ -118,10 +118,10 @@ void main () {
 
 
     //vec3 wcenter = uintBitsToFloat(cen.xyz);  
-    mat4 viewproj = view * projection;
+    mat4 viewproj = projection * view;
     mat4 iviewproj = invertMat(viewproj);
 
-    wPosition = (vsposition * pos2d.w) * iviewproj;
+    wPosition = iviewproj * vsposition;
 
     gl_Position = vsposition;
 
