@@ -12,7 +12,7 @@ in vec3 wPosition;
 out vec4 fragColor;
 
 void main () {
-    if (wPosition.y > 0.0)
+    /*if (wPosition.y > 0.0)
     {
         discard;        
     }
@@ -20,6 +20,8 @@ void main () {
     float A = -dot(vPosition, vPosition);
     if (A < -4.0) discard;
     float B = exp(A) * vColor.a;
-    fragColor = vec4(B * vColor.rgb, B);
+    fragColor = vec4(B * vColor.rgb, B);*/
+
+    fragColor = vec4(wPosition.xyz, 1.0);
 }
 `;
