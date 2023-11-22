@@ -71,7 +71,7 @@ void main () {
         scalingFactor = clamp((u_depthFade - start) / (end - start), 0.0, 1.0);
     }
 
-    wPosition = wcenter + vec3(position.xy, 0.0);
+    wPosition = wcenter;
 
     vec2 vCenter = vec2(pos2d) / pos2d.w;
     gl_Position = vec4(
