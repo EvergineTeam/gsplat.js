@@ -116,14 +116,15 @@ void main () {
                     + position.x * majorAxis * scalingFactor / viewport 
                     + position.y * minorAxis * scalingFactor / viewport, 0.0, 1.0);
 
+    gl_Position = vsposition;
+
 
     //vec3 wcenter = uintBitsToFloat(cen.xyz);  
     mat4 viewproj = projection * view;
     mat4 iviewproj = transpose(invertMat(viewproj));
 
-    wPosition = iviewproj * vsposition;
-
-    gl_Position = vsposition;
+    vsposition.z = (pos2d.z / pos2d.w);
+    wPosition = iviewproj * vsposition;    
 
 }
 `;
