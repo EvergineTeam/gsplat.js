@@ -122,7 +122,7 @@ void main () {
     mat4 viewproj = view * projection;
     mat4 iviewproj = inverse(viewproj);
 
-    wPosition = vsposition * iviewproj;
+    wPosition = (vsposition * iviewproj).xyz;
 
     gl_Position = vsposition;
 
