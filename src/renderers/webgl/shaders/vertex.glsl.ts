@@ -21,12 +21,40 @@ out vec4 vColor;
 out vec2 vPosition;
 out vec3 wPosition;
 
+float det(mat2 matrix) {
+    return matrix[0].x * matrix[1].y - matrix[0].y * matrix[1].x;
+}
+
+mat3 inverse(mat3 matrix) {
+    vec3 row0 = matrix[0];
+    vec3 row1 = matrix[1];
+    vec3 row2 = matrix[2];
+
+    vec3 minors0 = vec3(
+        det(mat2(row1.y, row1.z, row2.y, row2.z)),
+        det(mat2(row1.z, row1.x, row2.z, row2.x)),
+        det(mat2(row1.x, row1.y, row2.x, row2.y))
+    );
+    vec3 minors1 = vec3(
+        det(mat2(row2.y, row2.z, row0.y, row0.z)),
+        det(mat2(row2.z, row2.x, row0.z, row0.x)),
+        det(mat2(row2.x, row2.y, row0.x, row0.y))
+    );
+    vec3 minors2 = vec3(
+        det(mat2(row0.y, row0.z, row1.y, row1.z)),
+        det(mat2(row0.z, row0.x, row1.z, row1.x)),
+        det(mat2(row0.x, row0.y, row1.x, row1.y))
+    );
+
+    mat3 adj = transpose(mat3(minors0, minors1, minors2));
+
+    return (1.0 / dot(row0, minors0)) * adj;
+}
+
 void main () {
     uvec4 cen = texelFetch(u_texture, ivec2((uint(index) & 0x3ffu) << 1, uint(index) >> 10), 0);
     vec4 cam = view * vec4(uintBitsToFloat(cen.xyz), 1);
     vec4 pos2d = projection * cam;
-
-    vec3 wcenter = uintBitsToFloat(cen.xyz);    
 
     float clip = 1.2 * pos2d.w;
     if (pos2d.z < -pos2d.w || pos2d.x < -clip || pos2d.x > clip || pos2d.y < -clip || pos2d.y > clip) {
@@ -69,15 +97,23 @@ void main () {
         float start = max(normalizedDepth - 0.1, 0.0);
         float end = min(normalizedDepth + 0.1, 1.0);
         scalingFactor = clamp((u_depthFade - start) / (end - start), 0.0, 1.0);
-    }
-
-    wPosition = wcenter + vec3(position.xy, 0.0);
+    }    
 
     vec2 vCenter = vec2(pos2d) / pos2d.w;
-    gl_Position = vec4(
-        vCenter 
-        + position.x * majorAxis * scalingFactor / viewport 
-        + position.y * minorAxis * scalingFactor / viewport, 0.0, 1.0);
+    vec4 vsposition = vec4(
+                    vCenter 
+                    + position.x * majorAxis * scalingFactor / viewport 
+                    + position.y * minorAxis * scalingFactor / viewport, 0.0, 1.0);
+
+
+
+    //vec3 wcenter = uintBitsToFloat(cen.xyz);  
+    mat4 viewproj = view * projection;
+    mat4 iviewproj = inverse(viewproj);
+
+    wPosition = vsposition * iviewproj;
+
+    gl_Position = vsposition;
 
 }
 `;
