@@ -121,7 +121,7 @@ void main () {
     mat4 viewproj = view * projection;
     mat4 iviewproj = invertMat(viewproj);
 
-    wPosition = vsposition * iviewproj;
+    wPosition = (vsposition * pos2d.w) * iviewproj;
 
     gl_Position = vsposition;
 
